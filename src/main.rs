@@ -1,11 +1,11 @@
 use std::io;
 use std::io::{stdin, stdout, Read, Write, BufRead};
-use std::collections::BTreeMap;
 use ansi_term::Colour::RGB;
+use hashlink::{linked_hash_map, LinkedHashMap};
 
 fn main() {
     let decoration_code = {
-        let mut m = BTreeMap::new();
+        let mut m = LinkedHashMap::new();
         m.insert("§l", ["Bold","太字"]);
         m.insert("§o", ["Italic", "斜め"]);
         m.insert("§n", ["Underline", "下線"]);
@@ -25,7 +25,7 @@ fn main() {
     };
 
     let color_code = {
-        let mut m = BTreeMap::new();
+        let mut m = LinkedHashMap::new();
         m.insert("§9", "Blue");
         m.insert("§1", "Dark Blue");
         m.insert("§a", "Green");
@@ -78,4 +78,11 @@ fn read_texts() -> String {
         .read_line(&mut s)
         .expect("文字列の読み込みに失敗しました。処理を終了します。");
     s.trim_end().to_string()
+}
+
+fn pause() {
+    let mut stdout = stdout();
+    stdout.write(b"Press any key to continue...").unwrap();
+    stdout.flush().unwrap();
+    stdin().read(&mut [0]).unwrap();
 }
