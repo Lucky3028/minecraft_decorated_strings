@@ -15,6 +15,15 @@ fn main() {
         m
     };
 
+    //装飾コードのうち、入力として、各Valueのうち英字の方の頭文字を使うための変数
+    let dec_code_id = {
+        let mut d = Vec::new();
+        for (k, v) in &decoration_code {
+            d.push(v[0].chars().nth(0).unwrap().to_lowercase());
+        }
+        d
+    };
+
     let color_code = {
         let mut m = BTreeMap::new();
         m.insert("§9", "Blue");
@@ -34,6 +43,16 @@ fn main() {
         m.insert("§f", "White");
         m.insert("§0", "Black");
         m
+    };
+
+    //カラーコードのうち、入力として、インデックスを使うための変数
+    //ただし、1桁の場合は十の位を0埋め
+    let col_code_id = {
+        let mut v = Vec::new();
+        for i in 0..color_code.len() {
+            v.push(format!("{0: >02}", i));
+        }
+        v
     };
 
     println!("変換したい文字列を入力してください。：");
