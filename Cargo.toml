@@ -3,6 +3,8 @@ name = "minecraft_decorated_strings"
 version = "0.2.0"
 authors = ["Lucky3028 <lucky3028.0@gmail.com>"]
 edition = "2018"
+description = "This repository will help you to generate decorated strings in Minecraft."
+license = "MIT OR Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
