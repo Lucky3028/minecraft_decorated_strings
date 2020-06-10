@@ -22,7 +22,7 @@ fn main() {
     //装飾コードのうち、入力として、各Valueのうち英字の方の頭文字を使うための変数
     let dec_code_id = {
         let mut vec = Vec::new();
-        for (_k, v) in &decoration_code {
+        for (_, v) in &decoration_code {
             let initial = v[0].chars().nth(0).unwrap().to_lowercase();
             vec.push(format!("{}", initial.to_string().repeat(2)));
         }
@@ -77,7 +77,7 @@ fn main() {
     }
 
     //helpサブコマンド処理
-    if  {target_code == "help".to_string()} {
+    if {target_code == "help".to_string()} {
         println!("==装飾コード一覧 / Decoration Codes==");
         for (i, dec_code) in decoration_code.iter().enumerate() {
             println!(" {} -> {}：{}",
