@@ -5,7 +5,7 @@ use hashlink::LinkedHashMap;
 use std::process::Command;
 
 fn main() {
-    //文字コードをUS=ASCIIにする
+    //文字コードをUS-ASCIIにする
     let _ = Command::new("cmd.exe").arg("/c").arg("chcp").arg("20127").status();
 
     let decoration_code = {
