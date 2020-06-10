@@ -2,8 +2,12 @@ use std::io;
 use std::io::{stdin, stdout, Read, Write};
 use ansi_term::{Colour::RGB, ANSIString};
 use hashlink::LinkedHashMap;
+use std::process::Command;
 
 fn main() {
+    //文字コードをUS=ASCIIにする
+    let _ = Command::new("cmd.exe").arg("/c").arg("chcp").arg("20127").status();
+
     let decoration_code = {
         let mut m = LinkedHashMap::new();
         m.insert("§l", ["Bold", "太字"]);
