@@ -1,6 +1,6 @@
 [package]
 name = "minecraft_decorated_strings"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Lucky3028 <lucky3028.0@gmail.com>"]
 edition = "2018"
 description = "This repository will help you to generate decorated strings in Minecraft."
