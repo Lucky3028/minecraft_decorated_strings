@@ -1,9 +1,11 @@
-mod lib;
+mod util;
+mod format_code;
 
-use lib::{pause, read_texts};
 use std::process::Command;
 use ansi_term::{Colour::RGB, ANSIString};
 use hashlink::LinkedHashMap;
+use util::{pause, read_texts};
+use format_code::FormatCode;
 
 fn main() {
     //文字コードをUS-ASCIIにする
@@ -59,7 +61,7 @@ fn main() {
         return;
     }
 
-    println!("コードを入力してください。なお、装飾コード、カラーコードの順に入力してください。（例：bs02）");
+    println!("コードを入力してください。なお、装飾コード、カラーコードの順に入力してください。（例：xbxiy1）");
     println!("また、コード一覧を見たい場合はhelpと入力してください。");
     let target_code = read_texts();
     if  {target_code.is_empty()} {
@@ -70,8 +72,8 @@ fn main() {
     //helpサブコマンド処理
     if {target_code == "help".to_string()} {
         println!("==装飾コード一覧 / Decoration Codes==");
-        for code in &format_code {
-            println!(" {} -> {}：{}", fmt_code.code_id, fmt_code.name_en, fmt_code.name_ja);
+        for fmt_code in &format_code {
+            println!(" {} -> {}：{}", fmt_code.id, fmt_code.name_en, fmt_code.name_ja);
         }
         println!();
         println!("==カラーコード一覧 / Color Codes==");
@@ -119,26 +121,4 @@ fn make_text_colored<'a>(color_code: &'a str, plained_text: &'a str) -> ANSIStri
         _ => {}
     }
     colored_text
-}
-
-#[derive(Debug)]
-struct FormatCode {
-    id:      String,
-    code:    String,
-    name_en: String,
-    name_ja: String,
-}
-
-impl FormatCode {
-    fn new (code: &str, name_en: &str, name_ja: &str) -> FormatCode {
-        FormatCode {
-            id: {
-                let initial = name_en.chars().nth(0).unwrap().to_lowercase();
-                initial.to_string().repeat(2)
-            },
-            code: code.to_string(),
-            name_en: name_en.to_string(),
-            name_ja: name_ja.to_string()
-        }
-    }
 }
