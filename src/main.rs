@@ -78,11 +78,7 @@ fn main() {
         println!();
         println!("==カラーコード一覧 / Color Codes==");
         for col_code in &color_code {
-            println!(" {} -> {}",
-                     col_code.id,
-                     //英語説明文
-                     make_text_colored(col_code.code.as_ref(), col_code.name.as_ref())
-            );
+            println!(" {} -> {}", col_code.id, col_code.colored_text);
         }
         pause();
         return;
@@ -96,28 +92,4 @@ fn main() {
         ret
     };
 
-}
-
-fn make_text_colored<'a>(color_code: &'a str, plained_text: &'a str) -> ANSIString<'a> {
-    let mut colored_text = RGB(0, 0, 0).paint(plained_text);
-    match color_code {
-        "§0" => colored_text = RGB(  0,   0,   0).paint(plained_text),
-        "§1" => colored_text = RGB(  0,   0, 170).paint(plained_text),
-        "§2" => colored_text = RGB(  0, 170,   0).paint(plained_text),
-        "§3" => colored_text = RGB(  0, 170, 170).paint(plained_text),
-        "§4" => colored_text = RGB(170,   0,   0).paint(plained_text),
-        "§5" => colored_text = RGB(170,   0, 170).paint(plained_text),
-        "§6" => colored_text = RGB(255, 170,   0).paint(plained_text),
-        "§7" => colored_text = RGB(170, 170, 170).paint(plained_text),
-        "§8" => colored_text = RGB( 85,  85,  85).paint(plained_text),
-        "§9" => colored_text = RGB( 85,  85, 255).paint(plained_text),
-        "§a" => colored_text = RGB( 85, 255,  85).paint(plained_text),
-        "§b" => colored_text = RGB( 85, 255, 255).paint(plained_text),
-        "§c" => colored_text = RGB(255,  85,  85).paint(plained_text),
-        "§d" => colored_text = RGB(255,  85, 255).paint(plained_text),
-        "§e" => colored_text = RGB(255, 255,  85).paint(plained_text),
-        "§f" => colored_text = RGB(255, 255, 255).paint(plained_text),
-        _ => {}
-    }
-    colored_text
 }
