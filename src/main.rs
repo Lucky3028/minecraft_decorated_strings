@@ -43,16 +43,6 @@ fn main() {
         v
     };
 
-    //カラーコードのうち、入力として、インデックスを使うための変数
-    //ただし、1桁の場合は十の位を0埋め
-    let col_code_id = {
-        let mut vec = Vec::new();
-        for i in 0..color_code.len() {
-            vec.push(format!("{0: >02}", i));
-        }
-        vec
-    };
-
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文
     let target_str = read_texts();
