@@ -1,16 +1,16 @@
 use std::io;
 use std::io::{stdin, stdout, Read, Write};
 
-//何かしらのキーが押されるまで待機する
-pub fn pause() {
+/// 何かしらのキーが押されるまで待機する
+pub(crate) fn pause() {
     let mut stdout = stdout();
     stdout.write(b"Press any key to continue...").unwrap();
     stdout.flush().unwrap();
     stdin().read(&mut [0]).unwrap();
 }
 
-//文字列を入力させ読み取る
-pub fn read_texts() -> String {
+/// 文字列を入力させ読み取る
+pub(crate) fn read_texts() -> String {
     let mut s = String::new();
     io::stdin()
         .read_line(&mut s)
