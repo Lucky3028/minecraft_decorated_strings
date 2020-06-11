@@ -1,7 +1,7 @@
 use std::io;
 use std::io::{stdin, stdout, Read, Write};
 
-//何かしらのキーが押されるまで待機する
+/// 何かしらのキーが押されるまで待機する
 pub fn pause() {
     let mut stdout = stdout();
     stdout.write(b"Press any key to continue...").unwrap();
@@ -9,7 +9,7 @@ pub fn pause() {
     stdin().read(&mut [0]).unwrap();
 }
 
-//文字列を入力させ読み取る
+/// 文字列を入力させ読み取る
 pub fn read_texts() -> String {
     let mut s = String::new();
     io::stdin()

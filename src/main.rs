@@ -1,32 +1,23 @@
+mod lib;
+
+use lib::{pause, read_texts};
 use std::process::Command;
 use ansi_term::{Colour::RGB, ANSIString};
 use hashlink::LinkedHashMap;
-
-mod lib;
 
 fn main() {
     //文字コードをUS-ASCIIにする
     let _ = Command::new("cmd.exe").arg("/c").arg("chcp").arg("20127").status();
 
-    let decoration_code = {
-        let mut m = LinkedHashMap::new();
-        m.insert("§l", ["Bold", "太字"]);
-        m.insert("§o", ["Italic", "斜め"]);
-        m.insert("§n", ["Underline", "下線"]);
-        m.insert("§k", ["Obfuscated", "難読化"]);
-        m.insert("§m", ["Strike through", "取り消し線"]);
-        m.insert("§r", ["Reset", "文字リセット"]);
+    let format_code = {
+        let mut m = Vec::new();
+        m.push(FormatCode::new("§l", "Bold", "太字"));
+        m.push(FormatCode::new("§o", "Italic", "斜め"));
+        m.push(FormatCode::new("§n", "Underline", "下線"));
+        m.push(FormatCode::new("§k", "Obfuscated", "難読化"));
+        m.push(FormatCode::new("§m", "Strike through", "取り消し線"));
+        m.push(FormatCode::new("§r", "Reset", "文字リセット"));
         m
-    };
-
-    //装飾コードのうち、入力として、各Valueのうち英字の方の頭文字を使うための変数
-    let dec_code_id = {
-        let mut vec = Vec::new();
-        for (_, v) in &decoration_code {
-            let initial = v[0].chars().nth(0).unwrap().to_lowercase();
-            vec.push(format!("{}", initial.to_string().repeat(2)));
-        }
-        vec
     };
 
     let color_code = {
@@ -62,15 +53,15 @@ fn main() {
 
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文
-    let target_str = lib::read_texts();
+    let target_str = read_texts();
     if  {target_str.is_empty()} {
         println!("文字列が入力されていません。処理を終了します。");
-        return;;
+        return;
     }
 
     println!("コードを入力してください。なお、装飾コード、カラーコードの順に入力してください。（例：bs02）");
     println!("また、コード一覧を見たい場合はhelpと入力してください。");
-    let target_code = lib::read_texts();
+    let target_code = read_texts();
     if  {target_code.is_empty()} {
         println!("文字列が入力されていません。処理を終了します。");
         return;
@@ -79,14 +70,8 @@ fn main() {
     //helpサブコマンド処理
     if {target_code == "help".to_string()} {
         println!("==装飾コード一覧 / Decoration Codes==");
-        for (i, dec_code) in decoration_code.iter().enumerate() {
-            println!(" {} -> {}：{}",
-                     dec_code_id[i],
-                    //英語説明文
-                     dec_code.1[0],
-                    //日本語説明文
-                     dec_code.1[1]
-            );
+        for code in &format_code {
+            println!(" {} -> {}：{}", fmt_code.code_id, fmt_code.name_en, fmt_code.name_ja);
         }
         println!();
         println!("==カラーコード一覧 / Color Codes==");
@@ -97,7 +82,7 @@ fn main() {
                      make_text_colored(col_code.0, col_code.1)
             );
         }
-        lib::pause();
+        pause();
         return;
     }
 
@@ -134,4 +119,26 @@ fn make_text_colored<'a>(color_code: &'a str, plained_text: &'a str) -> ANSIStri
         _ => {}
     }
     colored_text
+}
+
+#[derive(Debug)]
+struct FormatCode {
+    id:      String,
+    code:    String,
+    name_en: String,
+    name_ja: String,
+}
+
+impl FormatCode {
+    fn new (code: &str, name_en: &str, name_ja: &str) -> FormatCode {
+        FormatCode {
+            id: {
+                let initial = name_en.chars().nth(0).unwrap().to_lowercase();
+                initial.to_string().repeat(2)
+            },
+            code: code.to_string(),
+            name_en: name_en.to_string(),
+            name_ja: name_ja.to_string()
+        }
+    }
 }
