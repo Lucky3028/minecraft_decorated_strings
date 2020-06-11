@@ -5,42 +5,42 @@ use std::process::Command;
 use ansi_term::{Colour::RGB, ANSIString};
 use hashlink::LinkedHashMap;
 use util::{pause, read_texts};
-use format_code::FormatCode;
+use format_code::{FormatCode, ColorCode};
 
 fn main() {
     //文字コードをUS-ASCIIにする
     let _ = Command::new("cmd.exe").arg("/c").arg("chcp").arg("20127").status();
 
     let format_code = {
-        let mut m = Vec::new();
-        m.push(FormatCode::new("§l", "Bold", "太字"));
-        m.push(FormatCode::new("§o", "Italic", "斜め"));
-        m.push(FormatCode::new("§n", "Underline", "下線"));
-        m.push(FormatCode::new("§k", "Obfuscated", "難読化"));
-        m.push(FormatCode::new("§m", "Strike through", "取り消し線"));
-        m.push(FormatCode::new("§r", "Reset", "文字リセット"));
-        m
+        let mut v = Vec::new();
+        v.push(FormatCode::new("§l", "Bold", "太字"));
+        v.push(FormatCode::new("§o", "Italic", "斜め"));
+        v.push(FormatCode::new("§n", "Underline", "下線"));
+        v.push(FormatCode::new("§k", "Obfuscated", "難読化"));
+        v.push(FormatCode::new("§m", "Strike through", "取り消し線"));
+        v.push(FormatCode::new("§r", "Reset", "文字リセット"));
+        v
     };
 
     let color_code = {
-        let mut m = LinkedHashMap::new();
-        m.insert("§9", "Blue");
-        m.insert("§1", "Dark Blue");
-        m.insert("§a", "Green");
-        m.insert("§2", "Dark Green");
-        m.insert("§b", "Aqua");
-        m.insert("§3", "Dark Aqua");
-        m.insert("§c", "Red");
-        m.insert("§4", "Dark Red");
-        m.insert("§d", "Light Purple");
-        m.insert("§5", "Dark Purple");
-        m.insert("§7", "Gray");
-        m.insert("§8", "Dark Gray");
-        m.insert("§6", "Gold");
-        m.insert("§e", "Yellow");
-        m.insert("§f", "White");
-        m.insert("§0", "Black");
-        m
+        let mut v = Vec::new();
+        v.push(ColorCode::new("§9", "Blue"));
+        v.push(ColorCode::new("§1", "Dark Blue"));
+        v.push(ColorCode::new("§a", "Green"));
+        v.push(ColorCode::new("§2", "Dark Green"));
+        v.push(ColorCode::new("§b", "Aqua"));
+        v.push(ColorCode::new("§3", "Dark Aqua"));
+        v.push(ColorCode::new("§c", "Red"));
+        v.push(ColorCode::new("§4", "Dark Red"));
+        v.push(ColorCode::new("§d", "Light Purple"));
+        v.push(ColorCode::new("§5", "Dark Purple"));
+        v.push(ColorCode::new("§7", "Gray"));
+        v.push(ColorCode::new("§8", "Dark Gray"));
+        v.push(ColorCode::new("§6", "Gold"));
+        v.push(ColorCode::new("§e", "Yellow"));
+        v.push(ColorCode::new("§f", "White"));
+        v.push(ColorCode::new("§0", "Black"));
+        v
     };
 
     //カラーコードのうち、入力として、インデックスを使うための変数
@@ -71,17 +71,17 @@ fn main() {
 
     //helpサブコマンド処理
     if {target_code == "help".to_string()} {
-        println!("==装飾コード一覧 / Decoration Codes==");
+        println!("==装飾コード一覧 / Format Codes==");
         for fmt_code in &format_code {
             println!(" {} -> {}：{}", fmt_code.id, fmt_code.name_en, fmt_code.name_ja);
         }
         println!();
         println!("==カラーコード一覧 / Color Codes==");
-        for (i, col_code) in color_code.iter().enumerate() {
+        for col_code in &color_code {
             println!(" {} -> {}",
-                     col_code_id[i],
-                    //英語説明文
-                     make_text_colored(col_code.0, col_code.1)
+                     col_code.id,
+                     //英語説明文
+                     make_text_colored(col_code.code.as_ref(), col_code.name.as_ref())
             );
         }
         pause();
@@ -95,7 +95,6 @@ fn main() {
             .collect::<Vec<_>>();
         ret
     };
-
 
 }
 

@@ -20,6 +20,7 @@ impl FormatCode {
     }
 }
 
+#[derive(Debug)]
 pub(crate) struct ColorCode {
     pub(crate) id: String,
     pub(crate) code: String,
