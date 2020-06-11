@@ -2,8 +2,6 @@ mod util;
 mod format_code;
 
 use std::process::Command;
-use ansi_term::{Colour::RGB, ANSIString};
-use hashlink::LinkedHashMap;
 use util::{pause, read_texts};
 use format_code::{FormatCode, ColorCode};
 
@@ -41,16 +39,6 @@ fn main() {
         v.push(ColorCode::new("§f", "White"));
         v.push(ColorCode::new("§0", "Black"));
         v
-    };
-
-    //カラーコードのうち、入力として、インデックスを使うための変数
-    //ただし、1桁の場合は十の位を0埋め
-    let col_code_id = {
-        let mut vec = Vec::new();
-        for i in 0..color_code.len() {
-            vec.push(format!("{0: >02}", i));
-        }
-        vec
     };
 
     println!("変換したい文字列を入力してください。：");
