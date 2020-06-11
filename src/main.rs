@@ -1,8 +1,8 @@
-use std::io;
-use std::io::{stdin, stdout, Read, Write};
 use std::process::Command;
 use ansi_term::{Colour::RGB, ANSIString};
 use hashlink::LinkedHashMap;
+
+mod lib;
 
 fn main() {
     //文字コードをUS-ASCIIにする
@@ -62,7 +62,7 @@ fn main() {
 
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文
-    let target_str = read_texts();
+    let target_str = lib::read_texts();
     if  {target_str.is_empty()} {
         println!("文字列が入力されていません。処理を終了します。");
         return
@@ -70,7 +70,7 @@ fn main() {
 
     println!("コードを入力してください。なお、装飾コード、カラーコードの順に入力してください。（例：bs02）");
     println!("また、コード一覧を見たい場合はhelpと入力してください。");
-    let target_code = read_texts();
+    let target_code = lib::read_texts();
     if  {target_code.is_empty()} {
         println!("文字列が入力されていません。処理を終了します。");
         return
@@ -97,7 +97,7 @@ fn main() {
                      make_text_colored(col_code.0, col_code.1)
             );
         }
-        pause();
+        lib::pause();
         return
     }
 
@@ -110,15 +110,6 @@ fn main() {
     };
 
 
-}
-
-fn read_texts() -> String {
-    let mut s = String::new();
-    io::stdin()
-        .read_line(&mut s)
-        .expect("文字列の読み込みに失敗しました。処理を終了します。");
-    //改行コードとスペースを削除する
-    s.trim_end().to_string()
 }
 
 fn make_text_colored<'a>(color_code: &'a str, plained_text: &'a str) -> ANSIString<'a> {
@@ -143,11 +134,4 @@ fn make_text_colored<'a>(color_code: &'a str, plained_text: &'a str) -> ANSIStri
         _ => {}
     }
     colored_text
-}
-
-fn pause() {
-    let mut stdout = stdout();
-    stdout.write(b"Press any key to continue...").unwrap();
-    stdout.flush().unwrap();
-    stdin().read(&mut [0]).unwrap();
 }
