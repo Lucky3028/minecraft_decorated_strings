@@ -1,8 +1,8 @@
 use std::io;
 use std::io::{stdin, stdout, Read, Write};
+use std::process::Command;
 use ansi_term::{Colour::RGB, ANSIString};
 use hashlink::LinkedHashMap;
-use std::process::Command;
 
 fn main() {
     //文字コードをUS-ASCIIにする
@@ -98,8 +98,18 @@ fn main() {
             );
         }
         pause();
-        return;
+        return
     }
+
+    let splited_target_code = {
+        let chars: Vec<char> = target_code.chars().collect();
+        let ret = chars.chunks(2)
+            .map(|chunk| chunk.iter().collect::<String>())
+            .collect::<Vec<_>>();
+        ret
+    };
+
+
 }
 
 fn read_texts() -> String {
@@ -107,6 +117,7 @@ fn read_texts() -> String {
     io::stdin()
         .read_line(&mut s)
         .expect("文字列の読み込みに失敗しました。処理を終了します。");
+    //改行コードとスペースを削除する
     s.trim_end().to_string()
 }
 
