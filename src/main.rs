@@ -65,7 +65,7 @@ fn main() {
     let target_str = lib::read_texts();
     if  {target_str.is_empty()} {
         println!("文字列が入力されていません。処理を終了します。");
-        return
+        return;;
     }
 
     println!("コードを入力してください。なお、装飾コード、カラーコードの順に入力してください。（例：bs02）");
@@ -73,7 +73,7 @@ fn main() {
     let target_code = lib::read_texts();
     if  {target_code.is_empty()} {
         println!("文字列が入力されていません。処理を終了します。");
-        return
+        return;
     }
 
     //helpサブコマンド処理
@@ -98,7 +98,7 @@ fn main() {
             );
         }
         lib::pause();
-        return
+        return;
     }
 
     let splited_target_code = {
