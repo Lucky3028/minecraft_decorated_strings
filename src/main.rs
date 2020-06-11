@@ -2,8 +2,6 @@ mod util;
 mod format_code;
 
 use std::process::Command;
-use ansi_term::{Colour::RGB, ANSIString};
-use hashlink::LinkedHashMap;
 use util::{pause, read_texts};
 use format_code::{FormatCode, ColorCode};
 

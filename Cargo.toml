@@ -10,4 +10,3 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 ansi_term = "0.12.1"
-hashlink = "0.5.1"
