@@ -6,7 +6,7 @@ use util::{pause, read_texts};
 use format_code::{FormatCode, ColorCode};
 
 fn main() {
-    //文字コードをUS-ASCIIにする
+    // 文字コードをUS-ASCIIにする
     let _ = Command::new("cmd.exe").arg("/c").arg("chcp").arg("20127").status();
 
     let format_code = vec![
@@ -53,7 +53,7 @@ fn main() {
         return;
     }
 
-    //helpサブコマンド処理
+    // helpサブコマンド処理
     if target_code == "help".to_string() {
         println!("==装飾コード一覧 / Format Codes==");
         for fmt_code in &format_code {
@@ -68,12 +68,12 @@ fn main() {
         return;
     }
 
+    // 入力コードを2文字ずつ分割
     let splited_target_code = {
         let chars: Vec<char> = target_code.chars().collect();
-        let ret = chars.chunks(2)
+        chars.chunks(2)
             .map(|chunk| chunk.iter().collect::<String>())
-            .collect::<Vec<_>>();
-        ret
+            .collect::<Vec<_>>()
     };
 
 }
