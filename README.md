@@ -13,3 +13,10 @@ Undefined.
 ## License
 
 MIT
+
+## Versioning
+
+[セマンティック バージョニング 2.0.0](https://semver.org/lang/ja/) に従う。
+
+* Cargo.tomlに記載されているバージョン情報を更新し、バージョンアップコミットとすること。
+* メジャーまたはパッチバージョンアップの場合、#majorまたは#patchをコミットメッセージタイトルに含めること。
