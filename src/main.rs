@@ -40,7 +40,7 @@ fn main() {
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文
     let target_str = read_texts();
-    if  (target_str.is_empty()) {
+    if  target_str.is_empty() {
         println!("文字列が入力されていません。処理を終了します。");
         return;
     }
@@ -48,13 +48,13 @@ fn main() {
     println!("コードを入力してください。なお、装飾コード、カラーコードの順に入力してください。（例：xbxiy1）");
     println!("また、コード一覧を見たい場合はhelpと入力してください。");
     let target_code = read_texts();
-    if  (target_code.is_empty()) {
+    if target_code.is_empty() {
         println!("文字列が入力されていません。処理を終了します。");
         return;
     }
 
     //helpサブコマンド処理
-    if (target_code == "help".to_string()) {
+    if target_code == "help".to_string() {
         println!("==装飾コード一覧 / Format Codes==");
         for fmt_code in &format_code {
             println!(" {} -> {}：{}", fmt_code.id, fmt_code.name_en, fmt_code.name_ja);
