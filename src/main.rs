@@ -1,13 +1,17 @@
-mod util;
 mod format_code;
+mod util;
 
+use format_code::{ColorCode, FormatCode};
 use std::process::Command;
 use util::{pause, read_texts};
-use format_code::{FormatCode, ColorCode};
 
 fn main() {
     // 文字コードをUS-ASCIIにする
-    let _ = Command::new("cmd.exe").arg("/c").arg("chcp").arg("20127").status();
+    let _ = Command::new("cmd.exe")
+        .arg("/c")
+        .arg("chcp")
+        .arg("20127")
+        .status();
 
     let format_code = vec![
         FormatCode::new("§l", "Bold", "太字"),
@@ -15,7 +19,7 @@ fn main() {
         FormatCode::new("§n", "Underline", "下線"),
         FormatCode::new("§k", "Obfuscated", "難読化"),
         FormatCode::new("§m", "Strike through", "取り消し線"),
-        FormatCode::new("§r", "Reset", "文字リセット")
+        FormatCode::new("§r", "Reset", "文字リセット"),
     ];
 
     let color_code = vec![
@@ -34,7 +38,7 @@ fn main() {
         ColorCode::new("§6", "Gold"),
         ColorCode::new("§e", "Yellow"),
         ColorCode::new("§f", "White"),
-        ColorCode::new("§0", "Black")
+        ColorCode::new("§0", "Black"),
     ];
 
     println!("変換したい文字列を入力してください。：");
@@ -57,7 +61,10 @@ fn main() {
     if target_code == "help".to_string() {
         println!("==装飾コード一覧 / Format Codes==");
         for fmt_code in &format_code {
-            println!(" {} -> {}：{}", fmt_code.id, fmt_code.name_en, fmt_code.name_ja);
+            println!(
+                " {} -> {}：{}",
+                fmt_code.id, fmt_code.name_en, fmt_code.name_ja
+            );
         }
         println!();
         println!("==カラーコード一覧 / Color Codes==");
@@ -71,9 +78,9 @@ fn main() {
     // 入力コードを2文字ずつ分割
     let splited_target_code = {
         let chars: Vec<char> = target_code.chars().collect();
-        chars.chunks(2)
+        chars
+            .chunks(2)
             .map(|chunk| chunk.iter().collect::<String>())
             .collect::<Vec<_>>()
     };
-
 }

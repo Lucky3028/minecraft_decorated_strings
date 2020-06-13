@@ -1,6 +1,6 @@
+use ansi_term::{ANSIString, Colour::RGB};
 use std::io;
 use std::io::{stdin, stdout, Read, Write};
-use ansi_term::{Colour::RGB, ANSIString};
 
 /// 何かしらのキーが押されるまで待機する
 pub(crate) fn pause() {
