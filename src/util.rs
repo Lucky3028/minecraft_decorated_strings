@@ -4,7 +4,7 @@ use std::io::{stdin, stdout, Read, Write};
 
 #[allow(clippy::unused_io_amount)]
 /// 何かしらのキーが押されるまで待機する
-pub(crate) fn pause() {
+pub fn pause() {
     let mut stdout = stdout();
     stdout.write(b"Press any key to continue...").unwrap();
     stdout.flush().unwrap();
@@ -12,7 +12,7 @@ pub(crate) fn pause() {
 }
 
 /// 文字列を入力させ読み取る
-pub(crate) fn read_texts() -> String {
+pub fn read_texts() -> String {
     let mut s = String::new();
     io::stdin()
         .read_line(&mut s)
@@ -22,6 +22,6 @@ pub(crate) fn read_texts() -> String {
 }
 
 /// カラーコードに応じてtextに色付け
-pub(crate) fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: &str) -> ANSIString {
+pub fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: &str) -> ANSIString {
     RGB(rgb_g, rgb_b, rgb_r).paint(text)
 }

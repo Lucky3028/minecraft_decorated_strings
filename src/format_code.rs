@@ -2,7 +2,7 @@ use super::util::paint_txt;
 use ansi_term::ANSIString;
 
 #[derive(Debug)]
-pub(crate) struct FormatCode {
+pub struct FormatCode {
     pub(crate) id: String,
     pub(crate) code: String,
     pub(crate) name_en: String,
@@ -24,7 +24,7 @@ impl FormatCode {
 }
 
 #[derive(Debug)]
-pub(crate) struct ColorCode<'a> {
+pub struct ColorCode<'a> {
     pub(crate) id: String,
     pub(crate) code: String,
     pub(crate) name: String,
