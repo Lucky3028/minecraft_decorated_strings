@@ -40,7 +40,7 @@ fn main() {
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文
     let target_str = read_texts();
-    if  target_str.is_empty() {
+    if target_str.is_empty() {
         println!("文字列が入力されていません。処理を終了します。");
         return;
     }

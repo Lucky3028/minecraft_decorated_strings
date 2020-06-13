@@ -1,5 +1,6 @@
 use std::io;
 use std::io::{stdin, stdout, Read, Write};
+use ansi_term::{Colour::RGB, ANSIString};
 
 /// 何かしらのキーが押されるまで待機する
 pub(crate) fn pause() {
@@ -17,4 +18,9 @@ pub(crate) fn read_texts() -> String {
         .expect("文字列の読み込みに失敗しました。処理を終了します。");
     //改行コードとスペースを削除する
     s.trim_end().to_string()
+}
+
+/// カラーコードに応じてtextに色付け
+pub(crate) fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: &str) -> ANSIString {
+    RGB(rgb_g, rgb_b, rgb_r).paint(text)
 }
