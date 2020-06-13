@@ -57,8 +57,8 @@ fn main() {
         return;
     }
 
-    // helpサブコマンド処理
-    if target_code == "help".to_string() {
+    // helpサブコマンド処理cargo clippy -- -D clippy::all -D clippy::nursery
+    if target_code == "help" {
         println!("==装飾コード一覧 / Format Codes==");
         for fmt_code in &format_code {
             println!(
@@ -83,4 +83,8 @@ fn main() {
             .map(|chunk| chunk.iter().collect::<String>())
             .collect::<Vec<_>>()
     };
+
+    for i in splited_target_code {
+        println!("{}", i);
+    }
 }

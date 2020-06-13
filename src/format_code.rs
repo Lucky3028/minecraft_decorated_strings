@@ -10,10 +10,10 @@ pub(crate) struct FormatCode {
 }
 
 impl FormatCode {
-    pub(crate) fn new(code: &str, name_en: &str, name_ja: &str) -> FormatCode {
-        FormatCode {
+    pub(crate) fn new(code: &str, name_en: &str, name_ja: &str) -> Self {
+        Self {
             id: {
-                let initial = name_en.chars().nth(0).unwrap().to_lowercase();
+                let initial = name_en.chars().next().unwrap().to_lowercase();
                 format!("{}{}", "x", initial.to_string())
             },
             code: code.to_string(),
@@ -55,7 +55,7 @@ impl ColorCode<'_> {
                     "§d" => paint_txt(255, 85, 255, name),
                     "§e" => paint_txt(255, 255, 85, name),
                     "§f" => paint_txt(255, 255, 255, name),
-                    _ => paint_txt(0, 0, 0, name),
+                    _ => paint_txt(1, 1, 1, name),
                 }
             },
         }

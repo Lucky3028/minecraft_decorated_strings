@@ -2,6 +2,7 @@ use ansi_term::{ANSIString, Colour::RGB};
 use std::io;
 use std::io::{stdin, stdout, Read, Write};
 
+#[allow(clippy::unused_io_amount)]
 /// 何かしらのキーが押されるまで待機する
 pub(crate) fn pause() {
     let mut stdout = stdout();
