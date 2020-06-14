@@ -1,7 +1,7 @@
 use std::fmt::Debug;
 
 #[derive(EnumProperty, EnumIter, Debug)]
-pub(crate) enum FmtCode {
+pub enum FmtCode {
     #[strum(props(code = "§l", name_ja = "太字"))]
     Bold,
     #[strum(props(code = "§o", name_ja = "斜め"))]

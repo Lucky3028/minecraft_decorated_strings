@@ -3,7 +3,7 @@ use super::util::paint_txt;
 use std::fmt::Debug;
 
 #[derive(EnumProperty, EnumIter, Debug)]
-pub(crate) enum ClrCode {
+pub enum ClrCode {
     #[strum(props(code = "§9", rgb_r = "85", rgb_g = "85", rgb_b = "255"))]
     Blue,
     #[strum(props(code = "§1", rgb_r = "0", rgb_g = "0", rgb_b = "170"))]

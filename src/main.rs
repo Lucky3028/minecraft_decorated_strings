@@ -30,20 +30,13 @@ fn main() {
     }
 
     let mut color_code: Vec<ColorCode> = Vec::new();
-
     for j in ClrCode::iter() {
         color_code.push(ColorCode::new(
             j.get_str("code").unwrap().to_string(),
             format!("{:?}", j).to_string(),
-            format!("{}", j.get_str("rgb_r").unwrap())
-                .parse::<u8>()
-                .unwrap_or(1),
-            format!("{}", j.get_str("rgb_g").unwrap())
-                .parse::<u8>()
-                .unwrap_or(1),
-            format!("{}", j.get_str("rgb_b").unwrap())
-                .parse::<u8>()
-                .unwrap_or(1),
+            j.get_str("rgb_r").unwrap().parse::<u8>().unwrap_or(1),
+            j.get_str("rgb_g").unwrap().parse::<u8>().unwrap_or(1),
+            j.get_str("rgb_b").unwrap().parse::<u8>().unwrap_or(1),
         ));
     }
 
