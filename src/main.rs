@@ -1,8 +1,15 @@
+extern crate strum;
+#[macro_use]
+extern crate strum_macros;
+
+mod color_code;
 mod format_code;
 mod util;
 
-use format_code::{ColorCode, FormatCode};
+use color_code::{ClrCode, ColorCode};
+use format_code::{FmtCode, FormatCode};
 use std::process::Command;
+use strum::{EnumProperty, IntoEnumIterator};
 use util::{pause, read_texts};
 
 fn main() {
@@ -13,33 +20,32 @@ fn main() {
         .arg("20127")
         .status();
 
-    let format_code = vec![
-        FormatCode::new("§l", "Bold", "太字"),
-        FormatCode::new("§o", "Italic", "斜め"),
-        FormatCode::new("§n", "Underline", "下線"),
-        FormatCode::new("§k", "Obfuscated", "難読化"),
-        FormatCode::new("§m", "Strike through", "取り消し線"),
-        FormatCode::new("§r", "Reset", "文字リセット"),
-    ];
+    let mut format_code: Vec<FormatCode> = Vec::new();
+    for k in FmtCode::iter() {
+        format_code.push(FormatCode::new(
+            k.get_str("code").unwrap().to_string(),
+            format!("{:?}", k),
+            k.get_str("name_ja").unwrap().to_string(),
+        ));
+    }
 
-    let color_code = vec![
-        ColorCode::new("§9", "Blue"),
-        ColorCode::new("§1", "Dark Blue"),
-        ColorCode::new("§a", "Green"),
-        ColorCode::new("§2", "Dark Green"),
-        ColorCode::new("§b", "Aqua"),
-        ColorCode::new("§3", "Dark Aqua"),
-        ColorCode::new("§c", "Red"),
-        ColorCode::new("§4", "Dark Red"),
-        ColorCode::new("§d", "Light Purple"),
-        ColorCode::new("§5", "Dark Purple"),
-        ColorCode::new("§7", "Gray"),
-        ColorCode::new("§8", "Dark Gray"),
-        ColorCode::new("§6", "Gold"),
-        ColorCode::new("§e", "Yellow"),
-        ColorCode::new("§f", "White"),
-        ColorCode::new("§0", "Black"),
-    ];
+    let mut color_code: Vec<ColorCode> = Vec::new();
+
+    for j in ClrCode::iter() {
+        color_code.push(ColorCode::new(
+            j.get_str("code").unwrap().to_string(),
+            format!("{:?}", j).to_string(),
+            format!("{}", j.get_str("rgb_r").unwrap())
+                .parse::<u8>()
+                .unwrap_or(1),
+            format!("{}", j.get_str("rgb_g").unwrap())
+                .parse::<u8>()
+                .unwrap_or(1),
+            format!("{}", j.get_str("rgb_b").unwrap())
+                .parse::<u8>()
+                .unwrap_or(1),
+        ));
+    }
 
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文

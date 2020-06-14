@@ -21,6 +21,6 @@ pub fn read_texts() -> String {
 }
 
 /// カラーコードに応じてtextに色付け
-pub fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: &str) -> String {
+pub fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: String) -> String {
     format!("\x1b[38;2;{};{};{}m{}\x1b[m", rgb_r, rgb_g, rgb_b, text)
 }
