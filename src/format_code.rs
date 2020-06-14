@@ -1,5 +1,4 @@
 use super::util::paint_txt;
-use ansi_term::ANSIString;
 
 #[derive(Debug)]
 pub struct FormatCode {
@@ -24,16 +23,16 @@ impl FormatCode {
 }
 
 #[derive(Debug)]
-pub struct ColorCode<'a> {
+pub struct ColorCode {
     pub(crate) id: String,
     pub(crate) code: String,
     pub(crate) name: String,
-    pub(crate) colored_text: ANSIString<'a>,
+    pub(crate) colored_text: String,
 }
 
-impl ColorCode<'_> {
-    pub(crate) fn new<'a>(code: &'a str, name: &'a str) -> ColorCode<'a> {
-        ColorCode {
+impl ColorCode {
+    pub(crate) fn new(code: &str, name: &str) -> Self {
+        Self {
             id: { format!("{}{}", "y", code.chars().nth(1).unwrap()) },
             code: code.to_string(),
             name: name.to_string(),

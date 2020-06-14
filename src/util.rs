@@ -1,4 +1,3 @@
-use ansi_term::{ANSIString, Colour::RGB};
 use std::io;
 use std::io::{stdin, stdout, Read, Write};
 
@@ -22,6 +21,6 @@ pub fn read_texts() -> String {
 }
 
 /// カラーコードに応じてtextに色付け
-pub fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: &str) -> ANSIString {
-    RGB(rgb_g, rgb_b, rgb_r).paint(text)
+pub fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: &str) -> String {
+    format!("\x1b[38;2;{};{};{}m{}\x1b[m", rgb_r, rgb_g, rgb_b, text)
 }
