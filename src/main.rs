@@ -20,6 +20,8 @@ fn main() {
         .arg("20127")
         .status();
 
+    // format_codeとcolor_codeの場合、コード側で何を追加するのか決定するため、get_strやparseはunwrapする
+
     let mut format_code: Vec<FormatCode> = Vec::new();
     for k in FmtCode::iter() {
         format_code.push(FormatCode::new(
@@ -39,6 +41,8 @@ fn main() {
             k.get_str("rgb_b").unwrap().parse::<u8>().unwrap(),
         ));
     }
+
+    //TODO target_strやtarget_code、splitted_target_codeに対する、OptiomやResultを使ったエラー処理実装
 
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文
@@ -83,7 +87,9 @@ fn main() {
             .collect::<Vec<_>>()
     };
 
-    for i in splited_target_code {
+    //TODO iter().findを用いた簡潔なmatch処理
+
+    for k in splitted_target_code {
         println!("{}", i);
     }
 }
