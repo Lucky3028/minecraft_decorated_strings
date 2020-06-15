@@ -33,10 +33,10 @@ fn main() {
     for k in ClrCode::iter() {
         color_code.push(ColorCode::new(
             k.get_str("code").unwrap().to_string(),
-            format!("{:?}", k).to_string(),
-            k.get_str("rgb_r").unwrap().parse::<u8>().unwrap_or(1),
-            k.get_str("rgb_g").unwrap().parse::<u8>().unwrap_or(1),
-            k.get_str("rgb_b").unwrap().parse::<u8>().unwrap_or(1),
+            format!("{:?}", k),
+            k.get_str("rgb_r").unwrap().parse::<u8>().unwrap(),
+            k.get_str("rgb_g").unwrap().parse::<u8>().unwrap(),
+            k.get_str("rgb_b").unwrap().parse::<u8>().unwrap(),
         ));
     }
 
@@ -75,7 +75,7 @@ fn main() {
     }
 
     // 入力コードを2文字ずつ分割
-    let splited_target_code = {
+    let splitted_target_code = {
         let chars: Vec<char> = target_code.chars().collect();
         chars
             .chunks(2)
