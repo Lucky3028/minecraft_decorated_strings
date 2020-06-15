@@ -8,6 +8,7 @@ mod util;
 
 use color_code::ColorCode;
 use format_code::FormatCode;
+use itertools::Itertools;
 use util::*;
 
 fn main() {
@@ -58,6 +59,7 @@ fn main() {
         chars
             .chunks(2)
             .map(|chunk| chunk.iter().collect::<String>())
+            .unique()
             .collect::<Vec<_>>()
     };
 
