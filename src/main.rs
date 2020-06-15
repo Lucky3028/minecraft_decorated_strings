@@ -8,16 +8,10 @@ mod util;
 
 use color_code::ColorCode;
 use format_code::FormatCode;
-use std::process::Command;
-use util::{pause, read_texts};
+use util::{change_code_page_utf8, pause, read_texts};
 
 fn main() {
-    // 文字コードをUS-ASCIIにする
-    let _ = Command::new("cmd.exe")
-        .arg("/c")
-        .arg("chcp")
-        .arg("20127")
-        .status();
+    change_code_page_utf8();
 
     let format_code = FormatCode::gen_from_enum();
     let color_code = ColorCode::gen_from_enum();

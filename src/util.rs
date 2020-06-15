@@ -1,5 +1,15 @@
 use std::io;
 use std::io::{stdin, stdout, Read, Write};
+use std::process::Command;
+
+pub fn change_code_page_utf8() {
+    Command::new("cmd.exe")
+        .arg("/c")
+        .arg("chcp")
+        .arg("20127")
+        .status()
+        .expect("文字コードの変更に失敗しました。");
+}
 
 #[allow(clippy::unused_io_amount)]
 /// 何かしらのキーが押されるまで待機する
