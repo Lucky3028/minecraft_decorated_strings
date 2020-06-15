@@ -37,7 +37,7 @@ pub fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: String) -> String {
     format!("\x1b[38;2;{};{};{}m{}\x1b[m", rgb_r, rgb_g, rgb_b, text)
 }
 
-pub fn search_fmt_code(target_str: String, already_code: String) -> Result<String, String> {
+pub fn compare_id_and_code(target_str: String, already_code: String) -> Result<String, String> {
     let format_codes = FormatCode::gen_from_enum();
     let color_codes = ColorCode::gen_from_enum();
 

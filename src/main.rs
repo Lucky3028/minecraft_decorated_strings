@@ -6,10 +6,9 @@ mod color_code;
 mod format_code;
 mod util;
 
-use crate::util::search_fmt_code;
 use color_code::ColorCode;
 use format_code::FormatCode;
-use util::{change_code_page_utf8, pause, read_texts};
+use util::*;
 
 fn main() {
     change_code_page_utf8();
@@ -64,7 +63,7 @@ fn main() {
 
     let mut found_code = String::new();
     for k in &slitted_target_code {
-        found_code = match search_fmt_code(k.to_owned(), found_code) {
+        found_code = match compare_id_and_code(k.to_owned(), found_code) {
             Ok(n) => n,
             Err(err) => {
                 println!("Error: {}", err);
