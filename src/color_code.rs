@@ -50,7 +50,7 @@ pub struct ColorCode {
 impl ColorCode {
     fn new(code: String, name: String, rgb_r: u8, rgb_g: u8, rgb_b: u8) -> Self {
         Self {
-            id: { format!("{}{}", "y", code.chars().nth(1).unwrap()) },
+            id: format!("{}{}", "y", code.chars().nth(1).unwrap()),
             code,
             name: name.to_owned(),
             colored_text: paint_txt(rgb_r, rgb_g, rgb_b, name),
