@@ -65,7 +65,7 @@ fn main() {
     let mut found_code = String::new();
     for k in &slitted_target_code {
         found_code = match search_fmt_code(k.to_owned(), found_code) {
-            Ok(n) => format!("{}", n),
+            Ok(n) => n,
             Err(err) => {
                 println!("Error: {}", err);
                 return;

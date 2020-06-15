@@ -41,9 +41,9 @@ pub fn search_fmt_code(target_str: String, already_code: String) -> Result<Strin
     let format_codes = FormatCode::gen_from_enum();
     let color_codes = ColorCode::gen_from_enum();
 
-    match format_codes.iter().find(|&x| &target_str == &x.id) {
+    match format_codes.iter().find(|&x| target_str == x.id) {
         Some(fmt) => Ok(format!("{}{}", already_code, fmt.code)),
-        None => match color_codes.iter().find(|&x| &target_str == &x.id) {
+        None => match color_codes.iter().find(|&x| target_str == x.id) {
             Some(clr) => Ok(format!("{}{}", already_code, clr.code)),
             None => Err("指定されたコードが見つかりませんでした。".to_owned()),
         },
