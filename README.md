@@ -10,6 +10,10 @@ This repository will help you to generate decorated strings in Minecraft.
 
 Undefined.
 
+## Prerequisites
+
+Windows 10
+
 ## License
 
 MIT

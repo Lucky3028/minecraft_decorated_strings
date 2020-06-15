@@ -1,6 +1,7 @@
 use super::util::paint_txt;
 
 use std::fmt::Debug;
+use strum::{EnumProperty, IntoEnumIterator};
 
 #[derive(EnumProperty, EnumIter, Debug)]
 pub enum ClrCode {
@@ -47,12 +48,28 @@ pub struct ColorCode {
 }
 
 impl ColorCode {
-    pub(crate) fn new(code: String, name: String, rgb_r: u8, rgb_g: u8, rgb_b: u8) -> Self {
+    fn new(code: String, name: String, rgb_r: u8, rgb_g: u8, rgb_b: u8) -> Self {
         Self {
-            id: { format!("{}{}", "y", code.chars().nth(1).unwrap()) },
+            id: format!("{}{}", "y", code.chars().nth(1).unwrap()),
             code,
             name: name.to_owned(),
             colored_text: paint_txt(rgb_r, rgb_g, rgb_b, name),
         }
+    }
+
+    // コード側で何を追加するのか決定するため、get_strやparseはunwrapする
+
+    pub(crate) fn gen_from_enum() -> Vec<Self> {
+        let mut ret: Vec<Self> = Vec::new();
+        for k in ClrCode::iter() {
+            ret.push(Self::new(
+                k.get_str("code").unwrap().to_string(),
+                format!("{:?}", k),
+                k.get_str("rgb_r").unwrap().parse::<u8>().unwrap(),
+                k.get_str("rgb_g").unwrap().parse::<u8>().unwrap(),
+                k.get_str("rgb_b").unwrap().parse::<u8>().unwrap(),
+            ));
+        }
+        ret
     }
 }

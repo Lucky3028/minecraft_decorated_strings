@@ -6,39 +6,17 @@ mod color_code;
 mod format_code;
 mod util;
 
-use color_code::{ClrCode, ColorCode};
-use format_code::{FmtCode, FormatCode};
-use std::process::Command;
-use strum::{EnumProperty, IntoEnumIterator};
-use util::{pause, read_texts};
+use color_code::ColorCode;
+use format_code::FormatCode;
+use util::*;
 
 fn main() {
-    // 文字コードをUS-ASCIIにする
-    let _ = Command::new("cmd.exe")
-        .arg("/c")
-        .arg("chcp")
-        .arg("20127")
-        .status();
+    change_code_page_utf8();
 
-    let mut format_code: Vec<FormatCode> = Vec::new();
-    for k in FmtCode::iter() {
-        format_code.push(FormatCode::new(
-            k.get_str("code").unwrap().to_string(),
-            format!("{:?}", k),
-            k.get_str("name_ja").unwrap().to_string(),
-        ));
-    }
+    let format_codes = FormatCode::gen_from_enum();
+    let color_codes = ColorCode::gen_from_enum();
 
-    let mut color_code: Vec<ColorCode> = Vec::new();
-    for j in ClrCode::iter() {
-        color_code.push(ColorCode::new(
-            j.get_str("code").unwrap().to_string(),
-            format!("{:?}", j).to_string(),
-            j.get_str("rgb_r").unwrap().parse::<u8>().unwrap_or(1),
-            j.get_str("rgb_g").unwrap().parse::<u8>().unwrap_or(1),
-            j.get_str("rgb_b").unwrap().parse::<u8>().unwrap_or(1),
-        ));
-    }
+    //TODO target_strやtarget_code、slitted_target_codeに対する、OptiomやResultを使ったエラー処理実装
 
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文
@@ -56,10 +34,10 @@ fn main() {
         return;
     }
 
-    // helpサブコマンド処理cargo clippy -- -D clippy::all -D clippy::nursery
+    // helpサブコマンド処理
     if target_code == "help" {
         println!("==装飾コード一覧 / Format Codes==");
-        for fmt_code in &format_code {
+        for fmt_code in &format_codes {
             println!(
                 " {} -> {}：{}",
                 fmt_code.id, fmt_code.name_en, fmt_code.name_ja
@@ -67,7 +45,7 @@ fn main() {
         }
         println!();
         println!("==カラーコード一覧 / Color Codes==");
-        for col_code in &color_code {
+        for col_code in &color_codes {
             println!(" {} -> {}", col_code.id, col_code.colored_text);
         }
         pause();
@@ -75,7 +53,7 @@ fn main() {
     }
 
     // 入力コードを2文字ずつ分割
-    let splited_target_code = {
+    let slitted_target_code = {
         let chars: Vec<char> = target_code.chars().collect();
         chars
             .chunks(2)
@@ -83,7 +61,16 @@ fn main() {
             .collect::<Vec<_>>()
     };
 
-    for i in splited_target_code {
-        println!("{}", i);
+    let mut found_code = String::new();
+    for k in &slitted_target_code {
+        found_code = match compare_id_and_code(k.to_owned(), found_code) {
+            Ok(n) => n,
+            Err(err) => {
+                println!("Error: {}", err);
+                return;
+            }
+        };
     }
+
+    println!("{}{}", found_code, target_str);
 }

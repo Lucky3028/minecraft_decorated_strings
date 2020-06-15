@@ -1,4 +1,5 @@
 use std::fmt::Debug;
+use strum::{EnumProperty, IntoEnumIterator};
 
 #[derive(EnumProperty, EnumIter, Debug)]
 pub enum FmtCode {
@@ -25,7 +26,7 @@ pub struct FormatCode {
 }
 
 impl FormatCode {
-    pub(crate) fn new(code: String, name_en: String, name_ja: String) -> Self {
+    fn new(code: String, name_en: String, name_ja: String) -> Self {
         Self {
             id: {
                 let initial = name_en.chars().next().unwrap().to_lowercase();
@@ -35,5 +36,19 @@ impl FormatCode {
             name_en,
             name_ja,
         }
+    }
+
+    // コード側で何を追加するのか決定するため、get_strはunwrapする
+
+    pub(crate) fn gen_from_enum() -> Vec<Self> {
+        let mut ret: Vec<Self> = Vec::new();
+        for k in FmtCode::iter() {
+            ret.push(Self::new(
+                k.get_str("code").unwrap().to_string(),
+                format!("{:?}", k),
+                k.get_str("name_ja").unwrap().to_string(),
+            ));
+        }
+        ret
     }
 }
