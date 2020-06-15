@@ -30,13 +30,13 @@ fn main() {
     }
 
     let mut color_code: Vec<ColorCode> = Vec::new();
-    for j in ClrCode::iter() {
+    for k in ClrCode::iter() {
         color_code.push(ColorCode::new(
-            j.get_str("code").unwrap().to_string(),
-            format!("{:?}", j).to_string(),
-            j.get_str("rgb_r").unwrap().parse::<u8>().unwrap_or(1),
-            j.get_str("rgb_g").unwrap().parse::<u8>().unwrap_or(1),
-            j.get_str("rgb_b").unwrap().parse::<u8>().unwrap_or(1),
+            k.get_str("code").unwrap().to_string(),
+            format!("{:?}", k).to_string(),
+            k.get_str("rgb_r").unwrap().parse::<u8>().unwrap_or(1),
+            k.get_str("rgb_g").unwrap().parse::<u8>().unwrap_or(1),
+            k.get_str("rgb_b").unwrap().parse::<u8>().unwrap_or(1),
         ));
     }
 
@@ -56,7 +56,7 @@ fn main() {
         return;
     }
 
-    // helpサブコマンド処理cargo clippy -- -D clippy::all -D clippy::nursery
+    // helpサブコマンド処理
     if target_code == "help" {
         println!("==装飾コード一覧 / Format Codes==");
         for fmt_code in &format_code {
