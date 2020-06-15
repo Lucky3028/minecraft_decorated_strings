@@ -6,10 +6,9 @@ mod color_code;
 mod format_code;
 mod util;
 
-use color_code::{ClrCode, ColorCode};
-use format_code::{FmtCode, FormatCode};
+use color_code::ColorCode;
+use format_code::FormatCode;
 use std::process::Command;
-use strum::{EnumProperty, IntoEnumIterator};
 use util::{pause, read_texts};
 
 fn main() {
@@ -20,27 +19,8 @@ fn main() {
         .arg("20127")
         .status();
 
-    // format_codeとcolor_codeの場合、コード側で何を追加するのか決定するため、get_strやparseはunwrapする
-
-    let mut format_code: Vec<FormatCode> = Vec::new();
-    for k in FmtCode::iter() {
-        format_code.push(FormatCode::new(
-            k.get_str("code").unwrap().to_string(),
-            format!("{:?}", k),
-            k.get_str("name_ja").unwrap().to_string(),
-        ));
-    }
-
-    let mut color_code: Vec<ColorCode> = Vec::new();
-    for k in ClrCode::iter() {
-        color_code.push(ColorCode::new(
-            k.get_str("code").unwrap().to_string(),
-            format!("{:?}", k),
-            k.get_str("rgb_r").unwrap().parse::<u8>().unwrap(),
-            k.get_str("rgb_g").unwrap().parse::<u8>().unwrap(),
-            k.get_str("rgb_b").unwrap().parse::<u8>().unwrap(),
-        ));
-    }
+    let format_code = FormatCode::gen_from_enum();
+    let color_code = ColorCode::gen_from_enum();
 
     //TODO target_strやtarget_code、splitted_target_codeに対する、OptiomやResultを使ったエラー処理実装
 
@@ -90,6 +70,6 @@ fn main() {
     //TODO iter().findを用いた簡潔なmatch処理
 
     for k in splitted_target_code {
-        println!("{}", i);
+        println!("{}", k);
     }
 }
