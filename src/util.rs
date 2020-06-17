@@ -4,6 +4,7 @@ use std::io;
 use std::io::{stdin, stdout, Read, Write};
 use std::process::Command;
 
+/// UTF-8にコマンドラインの文字コードを変更する
 pub fn change_code_page_utf8() {
     Command::new("cmd.exe")
         .arg("/c")
@@ -27,16 +28,26 @@ pub fn read_texts() -> String {
     let mut s = String::new();
     io::stdin()
         .read_line(&mut s)
-        .expect("文字列の読み込みに失敗しました。");
+        .expect("文字列を読み取れませんでした。");
     //改行コードとスペースを削除する
-    s.trim_end().to_string()
+    s.trim().to_string()
 }
 
-/// カラーコードに応じてtextに色付け
+/// カラーコードに応じてtextに色を付ける
 pub fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: String) -> String {
     format!("\x1b[38;2;{};{};{}m{}\x1b[m", rgb_r, rgb_g, rgb_b, text)
 }
 
+/// FormatCodeの中から該当するidを探す。見つからなければColorCodeから探す。どちらにも見つからなければError型を生成する。
+/// 見つかった場合は、既に存在する文字コードの後ろに文字コードを追加してそれを返す。
+///
+/// #Example
+/// ```
+/// use util.compare_id_and_code;
+///
+/// let s = compare_id_and_code("xb".to_string(), "§n".to_string());
+/// assert_eq!(s, Ok("§n§l".to_string()));
+/// ```
 pub fn compare_id_and_code(target_str: String, already_code: String) -> Result<String, String> {
     let format_codes = FormatCode::gen_from_enum();
     let color_codes = ColorCode::gen_from_enum();

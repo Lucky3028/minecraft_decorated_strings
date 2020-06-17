@@ -39,7 +39,7 @@ impl FormatCode {
     }
 
     // コード側で何を追加するのか決定するため、get_strはunwrapする
-
+    /// EnumからVec＜FormatCode>を生成する。
     pub(crate) fn gen_from_enum() -> Vec<Self> {
         let mut ret: Vec<Self> = Vec::new();
         for k in FmtCode::iter() {

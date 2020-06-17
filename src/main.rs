@@ -17,13 +17,11 @@ fn main() {
     let format_codes = FormatCode::gen_from_enum();
     let color_codes = ColorCode::gen_from_enum();
 
-    //TODO target_strやtarget_code、slitted_target_codeに対する、OptiomやResultを使ったエラー処理実装
-
     println!("変換したい文字列を入力してください。：");
     //TODO: 1文字ずつor連続文
     let target_str = read_texts();
     if target_str.is_empty() {
-        println!("文字列が入力されていません。処理を終了します。");
+        println!("文字列が入力されていません。");
         return;
     }
 
@@ -31,7 +29,7 @@ fn main() {
     println!("また、コード一覧を見たい場合はhelpと入力してください。");
     let target_code = read_texts();
     if target_code.is_empty() {
-        println!("文字列が入力されていません。処理を終了します。");
+        println!("文字列が入力されていません。");
         return;
     }
 

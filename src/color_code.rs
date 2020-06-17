@@ -58,7 +58,7 @@ impl ColorCode {
     }
 
     // コード側で何を追加するのか決定するため、get_strやparseはunwrapする
-
+    /// EnumからVec＜ColorCode>を生成する。
     pub(crate) fn gen_from_enum() -> Vec<Self> {
         let mut ret: Vec<Self> = Vec::new();
         for k in ClrCode::iter() {
