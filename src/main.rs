@@ -73,4 +73,5 @@ fn main() {
     }
 
     println!("{}{}", found_code, target_str);
+    println!("{}{}", found_code.replace("§", r#"\u00a7"#), target_str);
 }
