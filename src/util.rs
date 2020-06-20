@@ -82,3 +82,8 @@ pub fn compare_color_id_and_code(
         None => Err("指定されたカラーコードが見つかりませんでした。".to_owned()),
     }
 }
+
+///  節記号（§）をJsonのエスケープシーケンス（\u00a7）に置き換える
+pub fn replace_section_to_json(target: String) -> String {
+    target.replace("§", r#"\u00a7"#)
+}

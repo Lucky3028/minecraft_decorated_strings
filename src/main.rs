@@ -18,7 +18,6 @@ fn main() {
     let color_codes = ColorCode::gen_from_enum();
 
     println!("変換したい文字列を入力してください。：");
-    //TODO: 1文字ずつor連続文
     let target_str = read_texts();
     if target_str.is_empty() {
         println!("文字列が入力されていません。");
@@ -81,11 +80,10 @@ fn main() {
     };
 
     println!("{}{}{}", &found_format_code, &found_color_code, &target_str);
-    //TODO: replaceの関数切り出し
     println!(
         "{}{}{}",
-        found_format_code.replace("§", r#"\u00a7"#),
-        found_color_code.replace("§", r#"\u00a7"#),
+        replace_section_to_json(found_format_code),
+        replace_section_to_json(found_color_code),
         target_str
     );
 
