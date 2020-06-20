@@ -46,7 +46,7 @@ fn main() {
         return;
     }
 
-    // 入力コードをそれぞれ2文字ずつ分割
+    // 入力された装飾コードを2文字ずつ分割
     let slitted_target_format_code = {
         let chars: Vec<char> = target_format_code.chars().collect();
         chars
@@ -55,16 +55,8 @@ fn main() {
             .unique()
             .collect::<Vec<_>>()
     };
-    let slitted_target_color_code = {
-        let chars: Vec<char> = target_color_code.chars().collect();
-        chars
-            .chunks(2)
-            .map(|chunk| chunk.iter().collect::<String>())
-            .unique()
-            .collect::<Vec<_>>()
-    };
 
-    if slitted_target_color_code.len() >= 1 {
+    if target_color_code.len() != 2 {
         println!("カラーコードは1つのみ指定できます。");
         return;
     }
@@ -80,17 +72,16 @@ fn main() {
         };
     }
     let mut found_color_code = String::new();
-    for f in &slitted_target_color_code {
-        found_color_code = match compare_color_id_and_code(f.to_owned(), found_color_code) {
-            Ok(n) => n,
-            Err(err) => {
-                println!("Error: {}", err);
-                return;
-            }
-        };
-    }
+    found_color_code = match compare_color_id_and_code(target_color_code, found_color_code) {
+        Ok(n) => n,
+        Err(err) => {
+            println!("Error: {}", err);
+            return;
+        }
+    };
 
     println!("{}{}{}", &found_format_code, &found_color_code, &target_str);
+    //TODO: replaceの関数切り出し
     println!(
         "{}{}{}",
         found_format_code.replace("§", r#"\u00a7"#),
