@@ -64,6 +64,11 @@ fn main() {
             .collect::<Vec<_>>()
     };
 
+    if slitted_target_color_code.len() >= 1 {
+        println!("カラーコードは1つのみ指定できます。");
+        return;
+    }
+
     let mut found_format_code = String::new();
     for f in &slitted_target_format_code {
         found_format_code = match compare_format_id_and_code(f.to_owned(), found_format_code) {
