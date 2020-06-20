@@ -18,42 +18,36 @@ fn main() {
     let color_codes = ColorCode::gen_from_enum();
 
     println!("変換したい文字列を入力してください。：");
-    //TODO: 1文字ずつor連続文
     let target_str = read_texts();
     if target_str.is_empty() {
         println!("文字列が入力されていません。");
         return;
     }
 
-    println!("コードを入力してください。なお、装飾コード、カラーコードの順に入力してください。（例：xbxiy1）");
-    println!("また、コード一覧を見たい場合はhelpと入力してください。");
-    let target_code = read_texts();
-    if target_code.is_empty() {
-        println!("文字列が入力されていません。");
+    println!("次のコードが利用できます。");
+    println!("==装飾コード一覧 / Format Codes==");
+    for f in &format_codes {
+        println!(" {} -> {}：{}", f.id, f.name_en, f.name_ja);
+    }
+    println!("==カラーコード一覧 / Color Codes==");
+    for c in &color_codes {
+        println!(" {} -> {}", c.id, c.colored_text);
+    }
+
+    println!("装飾コードを入力してください。");
+    println!("不要な場合はそのままEnterを入力してください。");
+    let target_format_code = read_texts().to_lowercase();
+    println!("カラーコードを入力してください。");
+    println!("不要な場合はそのままEnterを入力してください。");
+    let target_color_code = read_texts().to_lowercase();
+    if target_format_code.is_empty() && target_color_code.is_empty() {
+        println!("どちらのコードも入力されませんでした。");
         return;
     }
 
-    // helpサブコマンド処理
-    if target_code == "help" {
-        println!("==装飾コード一覧 / Format Codes==");
-        for fmt_code in &format_codes {
-            println!(
-                " {} -> {}：{}",
-                fmt_code.id, fmt_code.name_en, fmt_code.name_ja
-            );
-        }
-        println!();
-        println!("==カラーコード一覧 / Color Codes==");
-        for col_code in &color_codes {
-            println!(" {} -> {}", col_code.id, col_code.colored_text);
-        }
-        pause();
-        return;
-    }
-
-    // 入力コードを2文字ずつ分割
-    let slitted_target_code = {
-        let chars: Vec<char> = target_code.chars().collect();
+    // 入力された装飾コードを2文字ずつ分割
+    let slitted_target_format_code = {
+        let chars: Vec<char> = target_format_code.chars().collect();
         chars
             .chunks(2)
             .map(|chunk| chunk.iter().collect::<String>())
@@ -61,9 +55,14 @@ fn main() {
             .collect::<Vec<_>>()
     };
 
-    let mut found_code = String::new();
-    for k in &slitted_target_code {
-        found_code = match compare_id_and_code(k.to_owned(), found_code) {
+    if target_color_code.len() != 2 {
+        println!("カラーコードは1つのみ指定できます。");
+        return;
+    }
+
+    let mut found_format_code = String::new();
+    for f in &slitted_target_format_code {
+        found_format_code = match compare_format_id_and_code(f.to_owned(), found_format_code) {
             Ok(n) => n,
             Err(err) => {
                 println!("Error: {}", err);
@@ -71,9 +70,22 @@ fn main() {
             }
         };
     }
+    let mut found_color_code = String::new();
+    found_color_code = match compare_color_id_and_code(target_color_code, found_color_code) {
+        Ok(n) => n,
+        Err(err) => {
+            println!("Error: {}", err);
+            return;
+        }
+    };
 
-    println!("{}{}", found_code, target_str);
-    println!("{}{}", found_code.replace("§", r#"\u00a7"#), target_str);
+    println!("{}{}{}", &found_format_code, &found_color_code, &target_str);
+    println!(
+        "{}{}{}",
+        replace_section_to_json(found_format_code),
+        replace_section_to_json(found_color_code),
+        target_str
+    );
 
-    pause()
+    pause();
 }
