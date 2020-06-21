@@ -11,7 +11,7 @@ pub fn change_code_page_utf8() {
         .arg("chcp")
         .arg("20127")
         .status()
-        .expect("文字コードの変更に失敗しました。");
+        .expect("文字コードの変更に失敗しました。/ Failed to change code page.");
 }
 
 #[allow(clippy::unused_io_amount)]
@@ -29,7 +29,7 @@ pub fn read_texts() -> String {
     let mut s = String::new();
     io::stdin()
         .read_line(&mut s)
-        .expect("文字列を読み取れませんでした。");
+        .expect("文字列を読み取れませんでした。/ Failed to read texts.");
     //改行コードとスペースを削除する
     s.trim().to_string()
 }
@@ -57,7 +57,7 @@ pub fn compare_format_id_and_code(
 
     match format_codes.iter().find(|&x| target_str == x.id) {
         Some(fmt) => Ok(format!("{}{}", already_code, fmt.code)),
-        None => Err("指定された装飾コードが見つかりませんでした。".to_owned()),
+        None => Err("指定された装飾コードが見つかりませんでした。/ Can't find the specified decoration codes.".to_owned()),
     }
 }
 
@@ -79,7 +79,10 @@ pub fn compare_color_id_and_code(
 
     match color_codes.iter().find(|&x| target_str == x.id) {
         Some(clr) => Ok(format!("{}{}", already_code, clr.code)),
-        None => Err("指定されたカラーコードが見つかりませんでした。".to_owned()),
+        None => Err(
+            "指定されたカラーコードが見つかりませんでした。/ Can't find the specified color code."
+                .to_owned(),
+        ),
     }
 }
 

@@ -14,17 +14,17 @@ use util::*;
 fn main() {
     change_code_page_utf8();
 
-    let format_codes = FormatCode::gen_from_enum();
-    let color_codes = ColorCode::gen_from_enum();
-
-    println!("変換したい文字列を入力してください。：");
+    println!("変換したい文字列を入力してください。/ Enter texts you want to decorate：");
     let target_str = read_texts();
     if target_str.is_empty() {
-        println!("文字列が入力されていません。");
+        println!("文字列が入力されていません。/ No texts are entered.");
         return;
     }
 
-    println!("次のコードが利用できます。");
+    let format_codes = FormatCode::gen_from_enum();
+    let color_codes = ColorCode::gen_from_enum();
+
+    println!("次のコードが利用できます。/ The codes below are available.");
     println!("==装飾コード一覧 / Format Codes==");
     for f in &format_codes {
         println!(" {} -> {}：{}", f.id, f.name_en, f.name_ja);
@@ -34,14 +34,14 @@ fn main() {
         println!(" {} -> {}", c.id, c.colored_text);
     }
 
-    println!("装飾コードを入力してください。");
-    println!("不要な場合はそのままEnterを入力してください。");
+    println!("装飾コードを入力してください。/ Enter the decoration codes.");
+    println!("不要な場合はそのままEnterを入力してください。/ If unnecessary, press Enter key.");
     let target_format_code = read_texts().to_lowercase();
-    println!("カラーコードを入力してください。");
-    println!("不要な場合はそのままEnterを入力してください。");
+    println!("カラーコードを入力してください。/ Enter the color code.");
+    println!("不要な場合はそのままEnterを入力してください。/ If unnecessary, press Enter key.");
     let target_color_code = read_texts().to_lowercase();
     if target_format_code.is_empty() && target_color_code.is_empty() {
-        println!("どちらのコードも入力されませんでした。");
+        println!("どちらのコードも入力されませんでした。/ Neither codes are entered.");
         return;
     }
 
@@ -56,7 +56,7 @@ fn main() {
     };
 
     if target_color_code.len() != 2 {
-        println!("カラーコードは1つのみ指定できます。");
+        println!("カラーコードは1つのみ指定できます。/ Only 1 color code can be specified.");
         return;
     }
 
