@@ -79,11 +79,11 @@ fn main() {
         }
     };
 
-    println!("{}{}{}", &found_format_code, &found_color_code, &target_str);
+    println!("{}{}{}", &found_color_code, &found_format_code, &target_str);
     println!(
         "{}{}{}",
-        replace_section_to_json(found_format_code),
         replace_section_to_json(found_color_code),
+        replace_section_to_json(found_format_code),
         target_str
     );
 
