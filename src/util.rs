@@ -1,12 +1,11 @@
 use super::color_code::ColorCode;
 use super::format_code::FormatCode;
-use std::io;
 use std::io::{stdin, stdout, Read, Write};
-use std::process::Command;
+use std::{io, process};
 
 /// UTF-8にコマンドラインの文字コードを変更する
 pub fn change_code_page_utf8() {
-    Command::new("cmd.exe")
+    process::Command::new("cmd.exe")
         .arg("/c")
         .arg("chcp")
         .arg("20127")
@@ -89,4 +88,14 @@ pub fn compare_color_id_and_code(
 ///  節記号（§）をJsonのエスケープシーケンス（\u00a7）に置き換える
 pub fn replace_section_to_json(target: String) -> String {
     target.replace("§", r#"\u00a7"#)
+}
+
+/// エラーが発生した際に引数に指定されたメッセージを表示し、Exitする
+pub fn exit_program(err_msg: &str) {
+    eprintln!(
+        "{}",
+        paint_txt(255, 0, 0, format!("Error: {}", err_msg.to_string()))
+    );
+    pause();
+    process::exit(1);
 }
