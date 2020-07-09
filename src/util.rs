@@ -48,14 +48,14 @@ pub fn paint_txt(rgb_r: u8, rgb_g: u8, rgb_b: u8, text: String) -> String {
 /// let s = compare_format_id_and_code("xb".to_string(), "§n".to_string());
 /// assert_eq!(s, Ok("§n§l".to_string()));
 /// ```
-pub fn compare_format_id_and_code(
-    target_str: String,
-    already_code: String,
+pub fn find_id_from_fmt_code(
+    target_id: String,
+    already_existed_code: String,
 ) -> Result<String, String> {
     let format_codes = FormatCode::gen_from_enum();
 
-    match format_codes.iter().find(|&x| target_str == x.id) {
-        Some(fmt) => Ok(format!("{}{}", already_code, fmt.code)),
+    match format_codes.iter().find(|&x| target_id == x.id) {
+        Some(fmt) => Ok(format!("{}{}", already_existed_code, fmt.code)),
         None => Err("指定された装飾コードが見つかりませんでした。/ Can't find the specified decoration codes.".to_owned()),
     }
 }
@@ -70,14 +70,14 @@ pub fn compare_format_id_and_code(
 /// let s = compare_color_id_and_code("xb".to_string(), "§n".to_string());
 /// assert_eq!(s, Ok("§n§l".to_string()));
 /// ```
-pub fn compare_color_id_and_code(
-    target_str: String,
-    already_code: String,
+pub fn find_id_from_clr_code(
+    target_id: String,
+    already_existed_code: String,
 ) -> Result<String, String> {
     let color_codes = ColorCode::gen_from_enum();
 
-    match color_codes.iter().find(|&x| target_str == x.id) {
-        Some(clr) => Ok(format!("{}{}", already_code, clr.code)),
+    match color_codes.iter().find(|&x| target_id == x.id) {
+        Some(clr) => Ok(format!("{}{}", already_existed_code, clr.code)),
         None => Err(
             "指定されたカラーコードが見つかりませんでした。/ Can't find the specified color code."
                 .to_owned(),
