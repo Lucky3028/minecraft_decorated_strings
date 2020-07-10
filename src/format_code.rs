@@ -8,7 +8,7 @@ pub enum FmtCode {
     #[strum(props(code = "§o", name_ja = "斜め"))]
     Italic,
     #[strum(props(code = "§n", name_ja = "下線"))]
-    Underlin,
+    Underline,
     #[strum(props(code = "§k", name_ja = "難読化"))]
     Obfuscated,
     #[strum(props(code = "§m", name_ja = "取り消し線"))]
