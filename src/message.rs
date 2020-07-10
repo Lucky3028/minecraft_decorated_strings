@@ -1,4 +1,4 @@
-pub enum Lang {
+enum Lang {
     Ja,
     En,
 }
